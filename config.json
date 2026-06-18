@@ -1,0 +1,40 @@
+{
+  "address": {
+    "token_set_threshold": 88,
+    "tfidf_cosine_threshold": 0.8,
+    "embedding_threshold": 0.85,
+    "borderline_lower": 78,
+    "borderline_upper": 87,
+    "logreg_C": 1.0,
+    "categories": {
+      "normal": 1,
+      "low": 2,
+      "medium": 3,
+      "high": 4
+    }
+  },
+  "phone": {
+    "prefix_length": 9,
+    "levenshtein_max_distance": 1,
+    "categories": {
+      "normal": 1,
+      "low": 2,
+      "medium": 3,
+      "high": 4
+    }
+  },
+  "ktp": {
+    "levenshtein_warning_distance": 1
+  },
+  "npwp": {
+    "levenshtein_warning_distance": 1
+  },
+  "element_category_map": {
+    "alamat": "Alamat",
+    "nomor_hp": "Nomor Telepon Seluler",
+    "nomor_ktp": "Nomor Identitas",
+    "npwp": "NPWP"
+  },
+  "selected_address_method": "Classifier",
+  "selected_phone_prefix": 9
+}

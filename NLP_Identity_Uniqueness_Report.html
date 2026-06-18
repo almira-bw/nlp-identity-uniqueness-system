@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NLP Identity Uniqueness System — Pefindo Credit Bureau</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #0D1F3C;
+    --navy-light: #1A3560;
+    --gold:       #C6993A;
+    --gold-light: #E8C97B;
+    --gold-pale:  #FAF3E0;
+    --slate:      #4A5568;
+    --slate-light:#718096;
+    --cloud:      #F7F8FA;
+    --white:      #FFFFFF;
+    --border:     #E2E8F0;
+    --red-flag:   #C53030;
+    --green-ok:   #276749;
+    --amber-warn: #975A16;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--navy);
+    background: var(--cloud);
+  }
+
+  /* ─── COVER ─── */
+  .cover {
+    background: var(--navy);
+    color: var(--white);
+    padding: 80px 64px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    border: 1px solid rgba(198,153,58,0.18);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(198,153,58,0.10);
+  }
+  .cover-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cover-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.12;
+    margin-bottom: 20px;
+    max-width: 620px;
+  }
+  .cover h1 em {
+    color: var(--gold-light);
+    font-style: normal;
+  }
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cover-meta-item .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .cover-meta-item .value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+  .cover-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 36px 0;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ─── SECTION WRAPPER ─── */
+  .section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin: 32px 0;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--navy);
+    padding: 22px 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .section-body {
+    padding: 36px;
+  }
+
+  /* ─── STAT GRID ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .stat-card {
+    background: var(--cloud);
+    border: 1px solid var(--border);
+    padding: 20px 20px 18px;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-number.gold { color: var(--gold); }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .stat-source {
+    font-size: 11px;
+    color: var(--slate-light);
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* ─── MODULE CARDS ─── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+  }
+  @media (max-width: 720px) {
+    .module-grid { grid-template-columns: 1fr; }
+    .cover h1 { font-size: 36px; }
+    .cover { padding: 48px 28px; }
+    .section-body { padding: 24px; }
+  }
+  .module-card {
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+  }
+  .module-card-header {
+    background: var(--navy-light);
+    color: var(--white);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .module-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    letter-spacing: 0.05em;
+  }
+  .module-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .module-card-body {
+    padding: 20px;
+    background: var(--white);
+  }
+  .module-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+  }
+  .module-row-label {
+    font-weight: 600;
+    color: var(--navy);
+    flex-shrink: 0;
+    min-width: 54px;
+  }
+  .module-row-value {
+    color: var(--slate);
+    line-height: 1.55;
+  }
+
+  /* ─── PIPELINE ─── */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .pipe-node {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 110px;
+    line-height: 1.35;
+  }
+  .pipe-node.accent {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .pipe-node small {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+  .pipe-arrow {
+    font-size: 18px;
+    color: var(--gold);
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* ─── LAYERS ─── */
+  .layer-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .layer {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .layer-num {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    line-height: 1;
+  }
+  .layer-num span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+  }
+  .layer-content {
+    padding: 20px 24px;
+    background: var(--white);
+  }
+  .layer-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .layer-desc {
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .layer-tag {
+    display: inline-block;
+    background: var(--gold-pale);
+    color: var(--amber-warn);
+    border: 1px solid #E8C97B;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    margin-top: 8px;
+  }
+
+  /* ─── RESULTS TABLE ─── */
+  table.results {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 20px;
+  }
+  table.results thead tr {
+    background: var(--navy);
+    color: var(--white);
+  }
+  table.results thead th {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  table.results tbody tr:nth-child(odd) { background: var(--cloud); }
+  table.results tbody tr:nth-child(even) { background: var(--white); }
+  table.results td {
+    padding: 10px 16px;
+    color: var(--slate);
+    border-bottom: 1px solid var(--border);
+  }
+  table.results td:first-child { font-weight: 600; color: var(--navy); }
+  .tag-selected {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-size: 11px;
+    padding: 2px 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── RISK TABLE ─── */
+  table.risk { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 20px; }
+  table.risk thead tr { background: var(--navy); color: var(--white); }
+  table.risk thead th { padding: 11px 14px; text-align: center; font-weight: 600; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  table.risk thead th:first-child { text-align: left; }
+  table.risk td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: center; font-size: 13.5px; }
+  table.risk td:first-child { text-align: left; font-weight: 600; color: var(--navy); }
+  table.risk tbody tr:nth-child(odd) { background: var(--cloud); }
+  .risk-normal  { color: var(--green-ok);   font-weight: 600; }
+  .risk-low     { color: #3182CE;           font-weight: 600; }
+  .risk-medium  { color: var(--amber-warn); font-weight: 600; }
+  .risk-high    { color: var(--red-flag);   font-weight: 600; }
+
+  /* ─── PERFORMANCE BARS ─── */
+  .perf-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .perf-row { display: grid; grid-template-columns: 180px 1fr 60px; align-items: center; gap: 12px; }
+  .perf-name { font-size: 13px; color: var(--slate); }
+  .perf-name strong { display: block; color: var(--navy); font-weight: 600; }
+  .perf-bar-track { background: var(--border); height: 8px; }
+  .perf-bar-fill { height: 8px; background: var(--navy); }
+  .perf-bar-fill.selected { background: var(--gold); }
+  .perf-f1 { font-size: 13px; font-weight: 600; color: var(--navy); text-align: right; }
+
+  /* ─── QUALITY GATES ─── */
+  .gate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+  .gate-card { border: 1px solid var(--border); padding: 20px; background: var(--white); }
+  .gate-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .gate-title { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 8px; }
+  .gate-desc { font-size: 13px; color: var(--slate); line-height: 1.6; }
+  .gate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green-ok);
+    background: #F0FFF4;
+    border: 1px solid #9AE6B4;
+    padding: 3px 8px;
+  }
+
+  /* ─── ROADMAP ─── */
+  .roadmap { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+  .roadmap-item { display: grid; grid-template-columns: 120px 1fr; gap: 0; border-bottom: 1px solid var(--border); }
+  .roadmap-item:last-child { border-bottom: none; }
+  .roadmap-phase {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .roadmap-phase.done { background: var(--gold); color: var(--navy); }
+  .roadmap-content { padding: 18px 24px; background: var(--white); }
+  .roadmap-action { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+  .roadmap-owner { font-size: 12.5px; color: var(--slate-light); }
+
+  /* ─── ASKS ─── */
+  .ask-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 24px; }
+  @media (max-width: 680px) { .ask-grid { grid-template-columns: 1fr; } .module-grid { grid-template-columns: 1fr; } }
+  .ask-card { border-top: 3px solid var(--gold); background: var(--cloud); padding: 20px; }
+  .ask-title { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 8px; }
+  .ask-desc { font-size: 13px; color: var(--slate); line-height: 1.6; }
+
+  /* ─── NOTICE ─── */
+  .notice {
+    background: var(--gold-pale);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--slate);
+    margin: 20px 0;
+  }
+  .notice strong { color: var(--navy); }
+
+  /* ─── PROSE ─── */
+  p { color: var(--slate); font-size: 14.5px; line-height: 1.8; margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    text-align: center;
+    padding: 28px 32px;
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+  .footer strong { color: rgba(255,255,255,0.7); }
+
+  /* ─── DIVIDER ─── */
+  .gold-line { width: 40px; height: 2px; background: var(--gold); margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <div class="cover-eyebrow">Pefindo Credit Bureau · Data Science — Credit Risk</div>
+  <h1>NLP Identity<br /><em>Uniqueness System</em></h1>
+  <p class="cover-sub">Strengthening Productive Lending Underwriting Through Automated Identity Consistency Scoring</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">Document Type</span>
+      <span class="value">Technical Summary</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Date</span>
+      <span class="value">June 2026</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Status</span>
+      <span class="value">Final Evaluation Complete</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Classification</span>
+      <span class="value">Confidential — Internal Use Only</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE WRAPPER ═══ -->
+<div class="page">
+
+  <!-- ─── 01 EXECUTIVE SUMMARY ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <span class="section-title">Executive Summary</span>
+    </div>
+    <div class="section-body">
+      <p>Pefindo's Productive Lending underwriting pipeline requires a systematic, auditable method for detecting identity attribute inconsistencies across multiple loan applications from the same borrower. Manual review of address, phone number, and ID variations is slow, unreliable, and produces no audit trail.</p>
+      <p>The NLP Identity Uniqueness System addresses this gap through three automated NLP modules — each measuring distinct value counts for a single identity attribute — and a configurable risk scoring layer that feeds directly into the underwriting scorecard. The system was developed under a rigorous 8-phase methodology with MLflow experiment tracking, test-driven development, and a locked test set evaluation protocol.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number">8,989</div>
+          <div class="stat-label">Unique Borrower Identities</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">265K</div>
+          <div class="stat-label">Application Rows Processed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number gold">3</div>
+          <div class="stat-label">NLP Modules Deployed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number gold">1.000</div>
+          <div class="stat-label">Classifier F1 (Val Holdout)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">30%</div>
+          <div class="stat-label">Identities Flagged High Risk</div>
+        </div>
+      </div>
+      <p class="stat-source">Source: Final evaluation (Phase 9) — 1,349 test identities, 39,972 rows.</p>
+    </div>
+  </div>
+
+  <!-- ─── 02 SYSTEM ARCHITECTURE ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <span class="section-title">System Architecture</span>
+    </div>
+    <div class="section-body">
+      <p>Each module operates independently on a single identity attribute. Outputs are aggregated into a maximum risk category per borrower identity, which feeds as a feature into the underwriting scorecard.</p>
+
+      <div class="notice">
+        <strong>Scope Note:</strong> This system measures identity attribute consistency. It is not a fraud detection engine.
+      </div>
+
+      <div class="pipeline">
+        <div class="pipe-node">Raw Application Data<small>Input</small></div>
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-node accent">M1<small>Address</small></div>
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-node accent">M2<small>Phone</small></div>
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-node accent">M3<small>KTP / NPWP</small></div>
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-node">Risk Category<small>Max per Identity</small></div>
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-node">Scorecard<small>Underwriting</small></div>
+      </div>
+
+      <div class="module-grid">
+        <div class="module-card">
+          <div class="module-card-header">
+            <span class="module-badge">M1</span>
+            <span class="module-name">Address Module</span>
+          </div>
+          <div class="module-card-body">
+            <div class="module-row"><span class="module-row-label">Input</span><span class="module-row-value">Raw address string (Alamat)</span></div>
+            <div class="module-row"><span class="module-row-label">Process</span><span class="module-row-value">Normalize Indonesian abbreviations → 5-feature extraction → GradientBoosting classifier</span></div>
+            <div class="module-row"><span class="module-row-label">Output</span><span class="module-row-value">Unique address count</span></div>
+            <div class="module-row"><span class="module-row-label">Risk</span><span class="module-row-value">Normal / Low / Medium / High</span></div>
+          </div>
+        </div>
+        <div class="module-card">
+          <div class="module-card-header">
+            <span class="module-badge">M2</span>
+            <span class="module-name">Phone Module</span>
+          </div>
+          <div class="module-card-body">
+            <div class="module-row"><span class="module-row-label">Input</span><span class="module-row-value">Nomor Telepon Seluler</span></div>
+            <div class="module-row"><span class="module-row-label">Process</span><span class="module-row-value">Strip 0/62 prefix → 8XXXXXXXXX format → Prefix@9 matching</span></div>
+            <div class="module-row"><span class="module-row-label">Output</span><span class="module-row-value">Unique phone count</span></div>
+            <div class="module-row"><span class="module-row-label">Risk</span><span class="module-row-value">Normal / Low / Medium / High</span></div>
+          </div>
+        </div>
+        <div class="module-card">
+          <div class="module-card-header">
+            <span class="module-badge">M3</span>
+            <span class="module-name">KTP / NPWP Module</span>
+          </div>
+          <div class="module-card-body">
+            <div class="module-row"><span class="module-row-label">Input</span><span class="module-row-value">KTP (16-digit) | NPWP (15-digit)</span></div>
+            <div class="module-row"><span class="module-row-label">Process</span><span class="module-row-value">Strip formatting → length validation → NIK structural validation</span></div>
+            <div class="module-row"><span class="module-row-label">Output</span><span class="module-row-value">Unique ID count</span></div>
+            <div class="module-row"><span class="module-row-label">Risk</span><span class="module-row-value">Normal or Anomalous flag</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 03 TECHNICAL APPROACH ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <span class="section-title">Technical Approach</span>
+    </div>
+    <div class="section-body">
+      <p>The Address Module employs a three-layer ensemble that escalates to machine learning only when rule-based logic cannot make a confident determination. Phone and ID modules apply deterministic rule-based logic, with the best-performing variants selected via empirical validation.</p>
+
+      <div class="layer-stack">
+        <div class="layer">
+          <div class="layer-num">01<span>Layer</span></div>
+          <div class="layer-content">
+            <div class="layer-title">Rule-Based Normalization</div>
+            <div class="layer-desc">Expands Indonesian address abbreviations (Jl.→Jalan, Kec.→Kecamatan, Kel.→Kelurahan). Strips stopwords and removes ALAMAT prefix artifacts. Normalizes RT/RW leading zeros to ensure consistent formatting before comparison.</div>
+            <span class="layer-tag">Coverage: All address pairs</span>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num">02<span>Layer</span></div>
+          <div class="layer-content">
+            <div class="layer-title">Fuzzy + TF-IDF Feature Extraction</div>
+            <div class="layer-desc">Generates 5 features per address pair: token_sort_ratio, token_set_ratio, partial_ratio, length_ratio, tfidf_cosine. Hard rules applied — Token Set ≥ 88 → SAME; Token Set &lt; 78 → DIFFERENT. The borderline zone (78–87) escalates to Layer 3.</div>
+            <span class="layer-tag">Handles ~majority of pairs with high confidence</span>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num">03<span>Layer</span></div>
+          <div class="layer-content">
+            <div class="layer-title">Trained ML Classifier</div>
+            <div class="layer-desc">GradientBoostingClassifier selected from a 9-candidate sweep via MLflow tracking. Trained on 10,000 stratified address pairs covering 5,583 of 5,654 eligible identities (99%). 5-fold cross-validation F1 = 0.993. Validation holdout F1 = 1.000. Train–val overfitting gap = 0.007 (threshold: ≤ 0.10 ✓).</div>
+            <span class="layer-tag">Borderline zone only — escalation from Layer 2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gold-line" style="margin-top: 32px;"></div>
+      <p style="font-weight:600; color: var(--navy); margin-bottom: 16px;">Phone &amp; KTP/NPWP Module Methods</p>
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Attribute</th>
+            <th>Method</th>
+            <th>Variants Evaluated</th>
+            <th>Selected</th>
+            <th>Val F1</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Phone</td>
+            <td>Prefix matching + Levenshtein distance</td>
+            <td style="text-align:center;">15</td>
+            <td>Prefix@9</td>
+            <td style="text-align:center; font-weight:700; color: var(--green-ok);">1.000</td>
+          </tr>
+          <tr>
+            <td>KTP</td>
+            <td>Exact distinct count + NIK structural validation</td>
+            <td style="text-align:center;">Rule-based</td>
+            <td>Exact + NIK</td>
+            <td style="text-align:center; color: var(--slate-light);">N/A</td>
+          </tr>
+          <tr>
+            <td>NPWP</td>
+            <td>Exact distinct count (15-digit validated)</td>
+            <td style="text-align:center;">Rule-based</td>
+            <td>Exact</td>
+            <td style="text-align:center; color: var(--slate-light);">N/A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── 04 EVALUATION RESULTS ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <span class="section-title">Evaluation Results</span>
+    </div>
+    <div class="section-body">
+      <p>The final evaluation was conducted once on the locked test set after model selection was complete. No retuning was performed post-unlock, ensuring a clean and unbiased performance record.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number gold">99.9%</div>
+          <div class="stat-label">Address Coverage</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">95.2%</div>
+          <div class="stat-label">Phone Coverage</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2.19</div>
+          <div class="stat-label">Mean Address Unique / ID</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5.5%</div>
+          <div class="stat-label">KTP Anomaly Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5.2%</div>
+          <div class="stat-label">NPWP Anomaly Rate</div>
+        </div>
+      </div>
+
+      <div class="gold-line" style="margin-top: 28px;"></div>
+      <p style="font-weight:600; color: var(--navy); margin-bottom: 4px;">Risk Category Distribution — Test Set (n = 1,349)</p>
+      <p style="font-size:13px; color: var(--slate-light); margin-bottom: 0;">Risk thresholds are fully configurable via config.json.</p>
+
+      <table class="risk" style="margin-top: 16px;">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>No Data</th>
+            <th>Normal (1)</th>
+            <th>Low (2)</th>
+            <th>Medium (3)</th>
+            <th>High (4)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Address (M1)</td>
+            <td>1</td>
+            <td class="risk-normal">542 (40.2%)</td>
+            <td class="risk-low">378 (28.0%)</td>
+            <td class="risk-medium">218 (16.2%)</td>
+            <td class="risk-high">210 (15.6%)</td>
+          </tr>
+          <tr>
+            <td>Phone (M2)</td>
+            <td>86</td>
+            <td class="risk-normal">470 (34.8%)</td>
+            <td class="risk-low">401 (29.7%)</td>
+            <td class="risk-medium">228 (16.9%)</td>
+            <td class="risk-high">164 (12.2%)</td>
+          </tr>
+          <tr>
+            <td>KTP (M3a)</td>
+            <td>53</td>
+            <td class="risk-normal">1,225 (90.8%)</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td class="risk-high">71 (5.3%)</td>
+          </tr>
+          <tr>
+            <td>NPWP (M3b)</td>
+            <td>902</td>
+            <td class="risk-normal">388 (28.8%)</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td class="risk-high">59 (4.4%)</td>
+          </tr>
+          <tr>
+            <td>Max Risk</td>
+            <td>—</td>
+            <td class="risk-normal">302 (22.4%)</td>
+            <td class="risk-low">376 (27.9%)</td>
+            <td class="risk-medium">270 (20.0%)</td>
+            <td class="risk-high">401 (29.7%)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notice" style="margin-top: 24px;">
+        <strong>Key Finding:</strong> 30% of test identities received a High Risk flag on at least one module, representing the portion of the portfolio that warrants elevated underwriting scrutiny.
+      </div>
+
+      <div class="gold-line" style="margin-top: 28px;"></div>
+      <p style="font-weight:600; color: var(--navy); margin-bottom: 4px;">Feature Extraction Output — Full Portfolio (n = 8,987)</p>
+      <p style="font-size:13px; color: var(--slate-light); margin-bottom: 16px;">Phase 11 applied all NLP modules to every identity in the dataset, producing two underwriting-ready tables. Phone deduplication uses prefix@9 (consistent with M2); address deduplication uses the GBM cluster method (consistent with M1).</p>
+
+      <div class="stat-grid" style="margin-bottom: 20px;">
+        <div class="stat-card">
+          <div class="stat-number">144,978</div>
+          <div class="stat-label">Feature Rows Extracted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">8,987</div>
+          <div class="stat-label">Identities Covered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">Feature Types</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number gold">2</div>
+          <div class="stat-label">Output Tables</div>
+        </div>
+      </div>
+
+      <table class="risk" style="margin-bottom: 20px;">
+        <thead>
+          <tr>
+            <th>Output File</th>
+            <th>Format</th>
+            <th>Rows</th>
+            <th>Key Columns</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code style="font-family:monospace; font-size:12px;">identity_features.csv</code></td>
+            <td>Long — one row per unique value per identity</td>
+            <td>144,978</td>
+            <td>nomor_identitas, feature_type, normalized_value, first_seen, last_seen, occurrence_count</td>
+          </tr>
+          <tr>
+            <td><code style="font-family:monospace; font-size:12px;">identity_summary.csv</code></td>
+            <td>Wide — one row per identity</td>
+            <td>8,987</td>
+            <td>addr_unique, phone_unique, ktp_category, npwp_category + min/max date ranges per feature</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="risk" style="margin-bottom: 20px;">
+        <thead>
+          <tr>
+            <th>Feature Group</th>
+            <th>Unique Rows</th>
+            <th>Coverage</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Workplace</td><td>41,430</td><td>—</td><td>Exact dedup (lowercased)</td></tr>
+          <tr><td>Phone</td><td>19,939</td><td class="risk-normal">95.2%</td><td>Prefix@9 dedup — consistent with M2</td></tr>
+          <tr><td>Address</td><td>19,681</td><td class="risk-normal">99.9%</td><td>GBM cluster dedup — consistent with M1</td></tr>
+          <tr><td>Mother's Name</td><td>16,550</td><td>—</td><td>Exact dedup</td></tr>
+          <tr><td>Name</td><td>13,008</td><td>—</td><td>Exact dedup</td></tr>
+          <tr><td>Email</td><td>11,744</td><td>—</td><td>Exact dedup</td></tr>
+          <tr><td>Date of Birth</td><td>9,881</td><td>—</td><td>Exact dedup</td></tr>
+          <tr><td>KTP</td><td>9,160</td><td class="risk-normal">95.8%</td><td>Normal: 90.3% · Anomalous: 5.5% · No Data: 4.2%</td></tr>
+          <tr><td>NPWP</td><td>3,585</td><td>33.9%</td><td>Normal: 28.7% · Anomalous: 5.2% · No Data: 66.1%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="gold-line" style="margin-top: 28px;"></div>
+      <p style="font-weight:600; color: var(--navy); margin-bottom: 16px;">Address Method Comparison — Validation Set (True Holdout)</p>
+
+      <div class="perf-list">
+        <div class="perf-row">
+          <div class="perf-name"><strong>GBM Classifier ★ Selected</strong>Gradient Boosting</div>
+          <div class="perf-bar-track"><div class="perf-bar-fill selected" style="width:100%"></div></div>
+          <div class="perf-f1" style="color:var(--gold);">1.000</div>
+        </div>
+        <div class="perf-row">
+          <div class="perf-name"><strong>TokenSet @ 0.80</strong>Baseline fuzzy</div>
+          <div class="perf-bar-track"><div class="perf-bar-fill" style="width:95.9%"></div></div>
+          <div class="perf-f1">0.959</div>
+        </div>
+        <div class="perf-row">
+          <div class="perf-name"><strong>MaxFuzzy @ 0.80</strong>Baseline fuzzy</div>
+          <div class="perf-bar-track"><div class="perf-bar-fill" style="width:95.9%"></div></div>
+          <div class="perf-f1">0.959</div>
+        </div>
+        <div class="perf-row">
+          <div class="perf-name"><strong>MaxFuzzy @ 0.85</strong>Higher threshold</div>
+          <div class="perf-bar-track"><div class="perf-bar-fill" style="width:90.7%"></div></div>
+          <div class="perf-f1">0.907</div>
+        </div>
+        <div class="perf-row">
+          <div class="perf-name"><strong>TokenSet @ 0.85</strong>Higher threshold</div>
+          <div class="perf-bar-track"><div class="perf-bar-fill" style="width:90.7%"></div></div>
+          <div class="perf-f1">0.907</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 05 RISK THRESHOLDS ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <span class="section-title">Risk Threshold Mapping</span>
+    </div>
+    <div class="section-body">
+      <p>Each module maps the count of distinct identity attribute values to a business risk category. All thresholds are fully configurable in <code style="background:var(--cloud); padding:2px 6px; font-family:monospace; font-size:13px; border:1px solid var(--border);">config.json</code> — no hardcoding required in production.</p>
+      <table class="risk">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th class="risk-normal">Normal</th>
+            <th class="risk-low">Low Concern</th>
+            <th class="risk-medium">Medium Concern</th>
+            <th class="risk-high">High Concern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Address (M1)</td>
+            <td class="risk-normal">1 distinct</td>
+            <td class="risk-low">2 distinct</td>
+            <td class="risk-medium">3 distinct</td>
+            <td class="risk-high">4+ distinct</td>
+          </tr>
+          <tr>
+            <td>Phone (M2)</td>
+            <td class="risk-normal">1 distinct</td>
+            <td class="risk-low">2 distinct</td>
+            <td class="risk-medium">3 distinct</td>
+            <td class="risk-high">4+ distinct</td>
+          </tr>
+          <tr>
+            <td>KTP (M3a)</td>
+            <td class="risk-normal">1 distinct</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td class="risk-high">2+ Anomalous</td>
+          </tr>
+          <tr>
+            <td>NPWP (M3b)</td>
+            <td class="risk-normal">1 distinct</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td style="color:var(--slate-light); text-align:center;">—</td>
+            <td class="risk-high">2+ Anomalous</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── 06 QUALITY GATES & METHODOLOGY ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <span class="section-title">Quality Gates &amp; Development Methodology</span>
+    </div>
+    <div class="section-body">
+      <p>The system was built under a rigorous 8-phase development process with embedded guardrails at every stage. The methodology is designed to prevent data leakage, overfitting, and regression — ensuring production deployments are backed by an immutable audit record.</p>
+      <div class="gate-grid">
+        <div class="gate-card">
+          <div class="gate-letter">A</div>
+          <div class="gate-title">Test Set Lockout</div>
+          <div class="gate-desc">test.csv was sealed until Phase 7. All model selection decisions used the validation set exclusively. Zero test data leakage by design.</div>
+          <span class="gate-badge">✓ Zero leakage</span>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">B</div>
+          <div class="gate-title">Test-Driven Development</div>
+          <div class="gate-desc">Every function required a failing test before implementation. Coverage: 95% preprocessing · 85% clustering · 100% risk categories. 127 tests passing.</div>
+          <span class="gate-badge">✓ 127 tests pass</span>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">C</div>
+          <div class="gate-title">Overfitting Gate</div>
+          <div class="gate-desc">Learning curve computed via 5-fold StratifiedKFold. Train–val F1 gap must be ≤ 0.10 before test set unlock.</div>
+          <span class="gate-badge">✓ Gap = 0.007</span>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">D</div>
+          <div class="gate-title">Regression Baseline Lock</div>
+          <div class="gate-desc">Phase 9 baselines locked in test_regression.py post-evaluation. Any future model change must pass 61 regression tests before deployment.</div>
+          <span class="gate-badge">✓ 61 regression tests</span>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">E</div>
+          <div class="gate-title">Stratified Identity Split</div>
+          <div class="gate-desc">Train/val/test split performed at identity level (70/15/15). No borrower appears across splits — prevents identity-level data leakage.</div>
+          <span class="gate-badge">✓ No cross-split leakage</span>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">F</div>
+          <div class="gate-title">MLflow Experiment Tracking</div>
+          <div class="gate-desc">All 9 classifier candidates, 21 address variants, and 15 phone variants logged with precision, recall, F1. Final evaluation logged as FINAL-TEST-EVAL — immutable audit record.</div>
+          <span class="gate-badge">✓ Full audit trail</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 07 KNOWN LIMITATIONS ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">07</span>
+      <span class="section-title">Known Limitations</span>
+    </div>
+    <div class="section-body">
+      <p>The following limitations are acknowledged and have been mitigated for Phase 1 deployment. Each is in scope for resolution in subsequent development phases.</p>
+      <table class="results" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Area</th>
+            <th>Limitation</th>
+            <th>Mitigation Applied</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Address label quality</td>
+            <td style="color:var(--slate);">Classifier accuracy depends on auto-label quality in training data.</td>
+            <td style="color:var(--slate);">3-signal rule validated; dual annotation with kappa check on 100 pairs planned.</td>
+          </tr>
+          <tr>
+            <td>Phone prefix grouping</td>
+            <td style="color:var(--slate);">Prefix match may group different subscribers sharing a number prefix.</td>
+            <td style="color:var(--slate);">Levenshtein layer added; Prefix@9 selected empirically on validation set.</td>
+          </tr>
+          <tr>
+            <td>KTP/NPWP rule-based only</td>
+            <td style="color:var(--slate);">No ML component for ID matching in Phase 1.</td>
+            <td style="color:var(--slate);">Structural validation sufficient for Phase 1; ML layer scoped for Phase 2.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── 08 ROADMAP ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">08</span>
+      <span class="section-title">Path to Production</span>
+    </div>
+    <div class="section-body">
+      <p>The system has completed development and evaluation. The following roadmap outlines integration and deployment activities through Q3 2026.</p>
+      <div class="roadmap">
+        <div class="roadmap-item">
+          <div class="roadmap-phase done">Now<br/>Complete</div>
+          <div class="roadmap-content">
+            <div class="roadmap-action">Finalize regression baselines. Document config thresholds.</div>
+            <div class="roadmap-owner">Owner: Data Science</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-phase done">Now<br/>Complete</div>
+          <div class="roadmap-content">
+            <div class="roadmap-action">Feature extraction table delivered for all 8,987 identities — identity_features.csv (144,978 rows) and identity_summary.csv (8,987 rows) ready for scorecard integration.</div>
+            <div class="roadmap-owner">Owner: Data Science</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-phase">Month +2<br/>July 2026</div>
+          <div class="roadmap-content">
+            <div class="roadmap-action">Deploy to staging. Monitor identity consistency score drift.</div>
+            <div class="roadmap-owner">Owner: Engineering</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-phase">Month +3<br/>August 2026</div>
+          <div class="roadmap-content">
+            <div class="roadmap-action">Expand KTP/NPWP to ML-based matching if data volume supports.</div>
+            <div class="roadmap-owner">Owner: Data Science</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 09 STAKEHOLDER ASKS ─── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">09</span>
+      <span class="section-title">Stakeholder Asks</span>
+    </div>
+    <div class="section-body">
+      <p>Three actions are required from stakeholders to advance this system to production deployment. Data Science is ready to support each workstream immediately.</p>
+      <div class="ask-grid">
+        <div class="ask-card">
+          <div class="ask-title">Data Access</div>
+          <div class="ask-desc">Provide production application data for expanded evaluation and ongoing drift monitoring of the identity consistency score.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-title">Scorecard Integration</div>
+          <div class="ask-desc">Align on feature engineering contract — specifically how module outputs (unique counts, risk categories) feed into the credit scorecard model.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-title">Deployment Sign-off</div>
+          <div class="ask-desc">Approve staging deployment timeline and monitoring plan to proceed with the July 2026 staging milestone.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .page -->
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <strong>Pefindo Credit Bureau</strong> · Data Science — Credit Risk · June 2026<br />
+  Confidential — Internal Use Only · NLP Identity Uniqueness System v1.0
+</div>
+
+</body>
+</html>
