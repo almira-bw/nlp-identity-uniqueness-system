@@ -270,6 +270,14 @@ def generate_identity_summary(
         npwp_unique,  npwp_category,  npwp_min_date, npwp_max_date
     """
 
+    def _risk_category(n):
+        """Map unique count to risk label using M1/M2 thresholds (from config.json)."""
+        if n == 0: return "Not Available"
+        if n == 1: return "Normal"
+        if n == 2: return "Low"
+        if n == 3: return "Medium"
+        return "High"
+
     def _summarise(g):
         def _count(group_name):
             return int((g["feature_group"] == group_name).sum())
@@ -295,9 +303,11 @@ def generate_identity_summary(
 
         return pd.Series({
             "addr_unique":    addr_n,
+            "addr_category":  _risk_category(addr_n),
             "addr_min_date":  addr_min,
             "addr_max_date":  addr_max,
             "phone_unique":   phone_n,
+            "phone_category": _risk_category(phone_n),
             "phone_min_date": phone_min,
             "phone_max_date": phone_max,
             "ktp_unique":     ktp_n,
